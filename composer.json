@@ -1,0 +1,29 @@
+{
+  "name": "mpstyle/mentity",
+  "version": "0.1",
+  "description": "MEntity is a PHP library to manage the users on your web application.",
+  "keywords": ["framework","toolkit", "mtoolkit", "web framework"],
+  "type": "library",
+  "homepage": "https://github.com/MpStyle/MToolkit",
+  "license": "LGPL-3.0+",
+  "authors": [
+    {
+      "name": "Michele Pagnin",
+      "email": "pagnin.michele@gmail.com",
+      "homepage": "http://mpmp.altervista.org",
+      "role": "Main Developer"
+    }
+  ],
+  "config": {
+    "vendor-dir": "./src/main/php/libs"
+  },
+  "require": {
+    "mpstyle/mtoolkit": "dev-membership"
+  },
+  "autoload": {
+    "psr-4": {
+      "mpstyle\\mtoolkit\\mentity\\": "./src/main/php/",
+      "Vendor\\Namespace\\": ""
+    }
+  }
+}
