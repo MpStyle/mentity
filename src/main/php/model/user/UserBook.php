@@ -3,7 +3,7 @@ namespace mpstyle\mtoolkit\mentity\model\user;
 
 use mpstyle\mtoolkit\mentity\model\role\RoleBook;
 use mpstyle\mtoolkit\mentity\model\user\exception\InsertUserException;
-use mpstyle\mtoolkit\mentity\model\userlogins\UserLoginsBook;
+use mpstyle\mtoolkit\mentity\model\provider\UserLoginsBook;
 use MToolkit\Model\Sql\MPDOQuery;
 
 
@@ -48,6 +48,18 @@ class UserBook
         }
 
         return $user;
+    }
+
+    /**
+     * @param User $user
+     * @param \PDO|null $connection
+     * @return bool
+     */
+    public function delete(ReadableUser $user, \PDO $connection=null){
+        $sql = "CALL mentity_user_delete(?);";
+        $query = new MPDOQuery($sql, $connection);
+        $query->bindValue($user->getId());
+        return $query->exec();
     }
 
     /**

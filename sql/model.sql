@@ -42,11 +42,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `user_logins`
+-- Table `provider`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user_logins` ;
+DROP TABLE IF EXISTS `provider` ;
 
-CREATE TABLE IF NOT EXISTS `user_logins` (
+CREATE TABLE IF NOT EXISTS `provider` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `login_provider` VARCHAR(200) NOT NULL COMMENT '',
   `provider_key` VARCHAR(500) NOT NULL COMMENT '',
@@ -80,23 +80,23 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `user_user_logins`
+-- Table `user_provider`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `user_user_logins` ;
+DROP TABLE IF EXISTS `user_provider` ;
 
-CREATE TABLE IF NOT EXISTS `user_user_logins` (
+CREATE TABLE IF NOT EXISTS `user_provider` (
   `user_id` INT NOT NULL COMMENT '',
-  `user_logins_id` INT NOT NULL COMMENT '',
-  PRIMARY KEY (`user_id`, `user_logins_id`)  COMMENT '',
-  INDEX `fk_user_user_logins_user_logins1_idx` (`user_logins_id` ASC)  COMMENT '',
-  CONSTRAINT `fk_user_user_logins_user1`
+  `provider_id` INT NOT NULL COMMENT '',
+  PRIMARY KEY (`user_id`, `provider_id`)  COMMENT '',
+  INDEX `fk_user_provider_provider1_idx` (`provider_id` ASC)  COMMENT '',
+  CONSTRAINT `fk_user_provider_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_user_logins_user_logins1`
-    FOREIGN KEY (`user_logins_id`)
-    REFERENCES `user_logins` (`id`)
+  CONSTRAINT `fk_user_provider_provider1`
+    FOREIGN KEY (`provider_id`)
+    REFERENCES `provider` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -119,9 +119,9 @@ CREATE PROCEDURE mentity_role_save(
   END//
 DELIMITER ;
 
--- mentity_user_logins_save(?, ?, ?, ?);
+-- mentity_provider_save(?, ?, ?, ?);
 DELIMITER //
-CREATE PROCEDURE mentity_user_logins_save(
+CREATE PROCEDURE mentity_provider_save(
   IN `@login_provider` VARCHAR(255),
   IN `@provider_key` VARCHAR(255),
   IN `@user_id` VARCHAR(255)
@@ -137,12 +137,16 @@ DELIMITER ;
 -- mentity_user_save(?, ?, ?, ?, ?, ?, ?, ?)
 
 -- mentity_role_get(?)
--- mentity_user_logins_get(?)
+-- mentity_provider_get(?)
 -- mentity_user_get
 
 -- mentity_role_get_list(?)
--- mentity_user_logins_get_list(?)
+-- mentity_provider_get_list(?)
 -- mentity_user_get_list(?)
 
 -- mentity_user_save_role
--- mentity_user_save_user_logins
+-- mentity_user_save_provider
+
+-- mentity_user_delete(?)
+-- mentity_role_delete(?)
+-- mentity_provider_delete(?)

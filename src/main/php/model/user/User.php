@@ -2,9 +2,9 @@
 namespace mpstyle\mtoolkit\mentity\model\user;
 
 use mpstyle\mtoolkit\mentity\model\role\Role;
-use mpstyle\mtoolkit\mentity\model\userlogins\UserLogins;
+use mpstyle\mtoolkit\mentity\model\provider\Provider;
 
-class User
+class User implements ReadableUser
 {
     /**
      * @var int
@@ -52,7 +52,7 @@ class User
     private $roleList=array();
 
     /**
-     * @var UserLogins[]
+     * @var Provider[]
      */
     private $userLoginsList=array();
 
@@ -242,7 +242,7 @@ class User
     }
 
     /**
-     * @return UserLogins[]
+     * @return Provider[]
      */
     public function getUserLoginsList()
     {

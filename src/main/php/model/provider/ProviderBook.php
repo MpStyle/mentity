@@ -1,20 +1,20 @@
 <?php
-namespace mpstyle\mtoolkit\mentity\model\userlogins;
+namespace mpstyle\mtoolkit\mentity\model\provider;
 
-use mpstyle\mtoolkit\mentity\model\userlogins\exception\InsertUserLoginsException;
+use mpstyle\mtoolkit\mentity\model\provider\exception\InsertProviderException;
 use MToolkit\Model\Sql\MPDOQuery;
 
-class UserLoginsBook
+class ProviderBook
 {
     /**
-     * @param UserLogins $role
+     * @param Provider $role
      * @param \PDO|null $connection
-     * @return UserLogins
-     * @throws InsertUserLoginsException
+     * @return Provider
+     * @throws InsertProviderException
      * @throws \Exception
      */
-    public static function save(UserLogins $role, \PDO $connection=null){
-        $sql = "CALL mentity_user_logins_save(?, ?, ?);";
+    public static function save(Provider $role, \PDO $connection=null){
+        $sql = "CALL mentity_provider_save(?, ?, ?);";
         $query = new MPDOQuery($sql, $connection);
         $query->bindValue($role->getLoginProvider());
         $query->bindValue($role->getProviderKey());
@@ -22,7 +22,7 @@ class UserLoginsBook
         $queryResult = $query->exec();
 
         if ($queryResult == false) {
-            throw new InsertUserLoginsException($query->getLastError());
+            throw new InsertProviderException($query->getLastError());
         }
 
         $result = $query->getResult();
@@ -33,23 +33,35 @@ class UserLoginsBook
     }
 
     /**
-     * @param $userId
-     * @param UserLogins $userLogins
+     * @param ReadableProvider $provider
      * @param \PDO|null $connection
-     * @return UserLogins
-     * @throws InsertUserLoginsException
+     * @return bool
+     */
+    public static function delete(ReadableProvider $provider, \PDO $connection=null){
+        $sql = "CALL mentity_provider_delete(?,?);";
+        $query = new MPDOQuery($sql, $connection);
+        $query->bindValue($provider->getId());
+        return $query->exec();
+    }
+
+    /**
+     * @param $userId
+     * @param Provider $userLogins
+     * @param \PDO|null $connection
+     * @return Provider
+     * @throws InsertProviderException
      * @throws \Exception
      */
-    public static function saveUserLogins($userId, UserLogins $userLogins, \PDO $connection=null){
+    public static function saveUserLogins($userId, Provider $userLogins, \PDO $connection=null){
         $userLogins=self::save($userLogins);
 
-        $sql = "CALL mentity_user_save_user_logins(?,?);";
+        $sql = "CALL mentity_user_save_provider(?,?);";
         $query = new MPDOQuery($sql, $connection);
         $query->bindValue($userId, $userLogins->getId());
         $queryResult = $query->exec();
 
         if ($queryResult == false) {
-            throw new InsertUserLoginsException($query->getLastError());
+            throw new InsertProviderException($query->getLastError());
         }
 
         return $userLogins;
@@ -58,12 +70,12 @@ class UserLoginsBook
     /**
      * @param $userLoginsId
      * @param \PDO|null $connection
-     * @return UserLogins
+     * @return Provider
      * @throws \Exception
      */
     public static function get($userLoginsId, \PDO $connection=null){
-        $toReturn = new UserLogins();
-        $sql = "CALL mentity_user_logins_get(?);";
+        $toReturn = new Provider();
+        $sql = "CALL mentity_provider_get(?);";
         $query = new MPDOQuery($sql, $connection);
         $query->bindValue($userLoginsId);
         $queryResult = $query->exec();
@@ -90,7 +102,7 @@ class UserLoginsBook
      */
     public static function getList($userLoginsId, \PDO $connection=null){
         $toReturn = array();
-        $sql = "CALL mentity_user_logins_get_list(?);";
+        $sql = "CALL mentity_provider_get_list(?);";
         $query = new MPDOQuery($sql, $connection);
         $query->bindValue($userLoginsId);
         $queryResult = $query->exec();
@@ -100,7 +112,7 @@ class UserLoginsBook
         }
 
         foreach ($query->getResult() as $row) {
-            $userLogins=new UserLogins();
+            $userLogins=new Provider();
 
             $userLogins->setLoginProvider($row['login_provider'])
                 ->setProviderKey($row['providers_key'])

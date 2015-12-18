@@ -1,7 +1,7 @@
 <?php
-namespace mpstyle\mtoolkit\mentity\model\userlogins;
+namespace mpstyle\mtoolkit\mentity\model\provider;
 
-class UserLogins
+class Provider implements ReadableProvider
 {
     private $id=-1;
     
@@ -30,7 +30,7 @@ class UserLogins
 
     /**
      * @param string $loginProvider
-     * @return UserLogins
+     * @return Provider
      */
     public function setLoginProvider($loginProvider)
     {
@@ -48,7 +48,7 @@ class UserLogins
 
     /**
      * @param string $providerKey
-     * @return UserLogins
+     * @return Provider
      */
     public function setProviderKey($providerKey)
     {
@@ -66,7 +66,7 @@ class UserLogins
 
     /**
      * @param string $userId
-     * @return UserLogins
+     * @return Provider
      */
     public function setUserId($userId)
     {
@@ -84,7 +84,7 @@ class UserLogins
 
     /**
      * @param int $id
-     * @return UserLogins
+     * @return Provider
      */
     public function setId($id)
     {

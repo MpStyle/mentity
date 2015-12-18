@@ -31,6 +31,18 @@ class RoleBook
     }
 
     /**
+     * @param ReadableRole $role
+     * @param \PDO|null $connection
+     * @return bool
+     */
+    public static function delete(ReadableRole $role, \PDO $connection=null){
+        $sql = "CALL mentity_role_delete(?);";
+        $query = new MPDOQuery($sql, $connection);
+        $query->bindValue($role->getId());
+        return $query->exec();
+    }
+
+    /**
      * @param int $userId
      * @param Role $role
      * @param \PDO|null $connection

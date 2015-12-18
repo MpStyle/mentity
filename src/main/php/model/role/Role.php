@@ -1,7 +1,7 @@
 <?php
 namespace mpstyle\mtoolkit\mentity\model\role;
 
-class Role
+class Role implements ReadableRole
 {
     /**
      * @var int
