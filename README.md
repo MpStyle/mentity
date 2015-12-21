@@ -1,6 +1,6 @@
 # MEntity
-MEntity is a PHP MToolkit library to manage the users and the accesses on your web application.
-It could be possible to store informations about:
+MEntity is a PHP MToolkit library to manage the users and the accesses to your web application.
+It could be possible to store information about:
 - Users
 - Roles
 - Providers
